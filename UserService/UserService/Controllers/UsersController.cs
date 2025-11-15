@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using blog.api.Models;
+using UserService.Models;
 
 namespace UserService.Controllers
 {
@@ -14,10 +14,12 @@ namespace UserService.Controllers
     public class UsersController : ControllerBase
     {
         private readonly AppDbContext _context;
+        private readonly JWTToken _token;
 
-        public UsersController(AppDbContext context)
+        public UsersController(AppDbContext context, JWTToken token)
         {
             _context = context;
+            _token = token;
         }
 
         // GET: api/Users
@@ -80,7 +82,8 @@ namespace UserService.Controllers
             _context.Users.Add(users);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetUsers", new { id = users.UserId }, users);
+            string token = _token.GenerateToken(users.UserEmail, users.Role);
+            return CreatedAtAction("GetUsers", new { id = users.UserId,newToken = token }, users);
         }
 
         // DELETE: api/Users/5

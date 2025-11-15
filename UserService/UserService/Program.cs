@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using UserService.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,6 +26,7 @@ string secreteKey = Convert.ToBase64String(secreteBytes);
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddTransient<JWTToken, JWTTokenService>();
 
 //Swagger and JWT configuration
 builder.Services.AddSwaggerGen(options=> { 
@@ -42,10 +44,11 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         options.TokenValidationParameters = new TokenValidationParameters
         {
             ValidateIssuer = true,
-            ValidateAudience = false,
+            ValidateAudience = true,
             ValidateLifetime = true,
             ValidateIssuerSigningKey = true,
             ValidIssuer = builder.Configuration["Jwt:Issuer"],
+            ValidAudience = builder.Configuration["Jwt:Audience"],
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
         };
     });
@@ -61,6 +64,10 @@ builder.Services.AddIdentityApiEndpoints<IdentityUser>(options =>
 }).AddEntityFrameworkStores<AppDbContext>()
  .AddDefaultTokenProviders();
 
+//builder.Services.AddIdentity<Users, IdentityRole>()
+//   .AddEntityFrameworkStores<AppDbContext>()
+//   .AddDefaultTokenProviders();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -69,11 +76,11 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
 app.UseHttpsRedirection();
 app.MapIdentityApi<IdentityUser>();
+app.UseAuthentication();
 app.UseAuthorization();
 
-app.MapControllers();
+app.MapControllers().RequireAuthorization();
 
 app.Run();

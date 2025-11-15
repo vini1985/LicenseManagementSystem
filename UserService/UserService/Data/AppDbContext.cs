@@ -1,4 +1,4 @@
-﻿using blog.api.Models;
+﻿using UserService.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;

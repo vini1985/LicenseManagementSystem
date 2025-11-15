@@ -11,7 +11,7 @@
         }
       ],
       "UpstreamPathTemplate": "/Notifications/{id}",
-      "UpstreamHttpMethod": [ "GET", "POST" ]
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE", "PATCH" ]
     },
     {
       "DownstreamPathTemplate": "/api/License/{id}",
@@ -23,7 +23,7 @@
         }
       ],
       "UpstreamPathTemplate": "/License/{id}",
-      "UpstreamHttpMethod": [ "GET", "POST" ]
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE", "PATCH" ]
     },
     {
       "DownstreamPathTemplate": "/api/Documents/{id}",
@@ -47,7 +47,7 @@
         }
       ],
       "UpstreamPathTemplate": "/Payments/{id}",
-      "UpstreamHttpMethod": [ "GET", "POST" ]
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE", "PATCH" ]
     },
     {
       "DownstreamPathTemplate": "/api/Users/{id}",
@@ -59,7 +59,7 @@
         }
       ],
       "UpstreamPathTemplate": "/Users/{id}",
-      "UpstreamHttpMethod": [ "GET", "POST" ]
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE", "PATCH" ]
     },
     {
       "DownstreamPathTemplate": "/Login/{id}",
@@ -71,7 +71,7 @@
         }
       ],
       "UpstreamPathTemplate": "/Login/{id}",
-      "UpstreamHttpMethod": [ "GET", "POST" ]
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE", "PATCH" ]
     }
   ]
 }

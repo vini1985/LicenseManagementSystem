@@ -15,7 +15,6 @@ namespace Portal.Models
         [Required]
         [DisplayName("Payment Method")]
         public string PaymentMethod { get; set; } = string.Empty;
-        [Required]
         public string Status { get; set; } = string.Empty;
     }
 }

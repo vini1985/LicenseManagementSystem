@@ -57,17 +57,17 @@
                     <form asp-controller="License"
                           asp-action="Edit"
                           asp-route-id="@item.LicenseId"
-                          style="display:inline;">
+                          style="display:inline;" method="get">
                         <button type="submit" class="btn btn-info btn-sm">Edit</button>
                     </form>
-
-
-                    <form asp-controller="License"
+                   <form asp-controller="License"
                           asp-action="Delete"
                           asp-route-id="@item.LicenseId"
-                          style="display:inline;" method="post">
+                          style="display:inline;"  enctype="multipart/form-data">
                         <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-                    </form>
+                    </form> 
+                  
+                    
                 </td>
         </tr>
 }

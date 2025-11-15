@@ -25,6 +25,7 @@ namespace Portal.Controllers
             _httpClient = new HttpClient();
             _httpClient.BaseAddress = _url;
         }
+        [HttpGet]
         public async Task<ActionResult> Index()
         {
             try
@@ -52,7 +53,7 @@ namespace Portal.Controllers
 
 
         // GET: LicenseController/Details/5
-        public ActionResult Details(int id)
+        public ActionResult Details(Guid id)
         {
             return View();
         }
@@ -128,7 +129,7 @@ namespace Portal.Controllers
             }
         }
 
-        [HttpGet]
+        [HttpPost]
         public async Task<ActionResult> Edit(Guid id)
         {
             try
