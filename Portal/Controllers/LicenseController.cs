@@ -1,0 +1,222 @@
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+using Portal.Models;
+using System.Net.Http;
+using System.Reflection;
+using System.Text;
+
+namespace Portal.Controllers
+{
+    [Authorize(Roles = "Admin,User")]
+    public class LicenseController : Controller
+    {
+        // GET: LicenseController
+        private readonly HttpClient _httpClient;
+        Uri _url = new Uri("http://localhost:5155");
+        public LicenseController()
+        {
+            _httpClient = new HttpClient();
+            _httpClient.BaseAddress = _url;
+        }
+        public async Task<ActionResult> Index()
+        {
+            try
+            {
+                var response = await _httpClient.GetAsync($"{_httpClient.BaseAddress}License");
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    ModelState.AddModelError("", "Failed to load license data.");
+                    return View(new List<LicenseViewModels>());
+                }
+
+                var json = await response.Content.ReadAsStringAsync();
+                var licenses = JsonConvert.DeserializeObject<List<LicenseViewModels>>(json)
+                               ?? new List<LicenseViewModels>();
+
+                return View(licenses);
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("", "An unexpected error occurred while loading licenses.");
+                return View(new List<LicenseViewModels>());
+            }
+        }
+
+
+        // GET: LicenseController/Details/5
+        public ActionResult Details(int id)
+        {
+            return View();
+        }
+
+        // GET: LicenseController/Create
+        public ActionResult Create()
+        {
+            ViewBag.LicenseId = Guid.NewGuid().ToString();
+            ViewBag.TenantId = Guid.NewGuid().ToString();
+            return View();
+        }
+
+        // POST: LicenseController/Create
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Create(LicenseViewModels model)
+        {
+            if (!ModelState.IsValid)
+                return View(model);
+
+            try
+            {
+                // 1. Upload Document
+                var uploadPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads");
+                Directory.CreateDirectory(uploadPath);
+
+                var filePath = Path.Combine(uploadPath, model.DocumentInfo.FileName);
+
+                await using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    await model.DocumentInfo.CopyToAsync(stream);
+                }
+
+                // Helper method for making POST calls
+                async Task<HttpResponseMessage> PostAsync(string endpoint, object body)
+                {
+                    var json = JsonConvert.SerializeObject(body);
+                    var content = new StringContent(json, Encoding.UTF8, "application/json");
+                    return await _httpClient.PostAsync($"{_httpClient.BaseAddress}{endpoint}", content);
+                }
+
+                // 2. Send License details
+                var licenseResponse = await PostAsync("License", model);
+
+                if (!licenseResponse.IsSuccessStatusCode)
+                {
+                    ModelState.AddModelError("", "Failed to create license.");
+                    return View(model);
+                }
+
+                // 3. Save Document record
+                var documentVm = new DocumentViewModels
+                {
+                    DocumentId = Guid.NewGuid(),
+                    LicenseId = model.LicenseId,
+                    DocumentType = model.DocumentType,
+                    DocumentName = model.DocumentName,
+                    DocumentPath = $"wwwroot/uploads/{model.DocumentInfo.FileName}",
+                    UploadedAt = DateTime.UtcNow
+                };
+
+                await PostAsync("Documents", documentVm);
+
+                
+                HttpContext.Session.SetString("LicenseId", model.LicenseId.ToString());
+
+                return RedirectToAction(nameof(Create),"Payment");
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("", "An error occurred while creating the license.");
+                return View(model);
+            }
+        }
+
+        [HttpGet]
+        public async Task<ActionResult> Edit(Guid id)
+        {
+            try
+            {
+                var response = await _httpClient.GetAsync($"{_httpClient.BaseAddress}License/{id}");
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    ModelState.AddModelError("", "Failed to load license data.");
+                    return View(new LicenseViewModels());  // return single object
+                }
+
+                var json = await response.Content.ReadAsStringAsync();
+                var license = JsonConvert.DeserializeObject<LicenseViewModels>(json);
+
+                return View(license);  // return ONE model
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("", "An unexpected error occurred while loading licenses.");
+                return View(new LicenseViewModels());  // return empty model
+            }
+        }
+
+        // POST: LicenseController/Edit/5
+        [HttpPut("{id}")]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Edit(Guid id,LicenseViewModels model)
+        {
+            if (!ModelState.IsValid)
+                return View(model);
+
+            try
+            {
+                async Task<bool> PostToApiAsync(string endpoint, object payload)
+                {
+                    var json = JsonConvert.SerializeObject(payload);
+                    var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
+
+                    var response = await _httpClient.PostAsync($"{_httpClient.BaseAddress}{endpoint}/{id}", httpContent);
+                    return response.IsSuccessStatusCode;
+                }
+
+                var isLicenseCreated = await PostToApiAsync("License", model);
+                if (!isLicenseCreated)
+                {
+                    ModelState.AddModelError("", "Unable to update license.");
+                    return View(model);
+                }
+                
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("", $"An unexpected error occurred: {ex.Message}");
+                return View(model);
+            }
+        }
+
+        // GET: LicenseController/Delete/5
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            if (id == Guid.Empty)
+                return BadRequest();
+            var response = await _httpClient.DeleteAsync($"{_httpClient.BaseAddress}License/{id}");
+
+            if (response == null)
+                return NotFound();
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        // POST: LicenseController/Delete/5
+        [HttpPost("{id}")]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Delete(LicenseViewModels model,Guid id)
+        {
+            try
+            {
+                if (id == Guid.Empty)
+                    return BadRequest();
+                var response = await _httpClient.DeleteAsync($"{_httpClient.BaseAddress}License/{id}");
+
+                if (response == null)
+                    return NotFound();
+
+                return RedirectToAction(nameof(Index),"License");
+            }
+            catch
+            {
+                return View();
+            }
+        }
+    }
+}

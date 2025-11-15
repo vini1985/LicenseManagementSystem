@@ -1,0 +1,26 @@
+@model Portal.Models.UserViewModels
+@{
+    ViewData["Title"] = "Login";
+    Layout = "~/Views/Shared/_Layoutlogin.cshtml";
+}
+
+<div class="d-flex justify-content-center align-items-center" style="height:100vh;">
+    <div class="card p-4 shadow" style="width: 350px;">
+        <form asp-action="Login" asp-controller="Home" method="post">
+            <h4 class="text-center mb-4">Login</h4>
+
+            <div class="form-group mb-3">
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" type="email" class="form-control" placeholder="Enter email" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="Password" class="control-label"></label>
+                <input asp-for="Password" type="password" class="form-control" placeholder="Password" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Login</button>
+        </form>
+    </div>
+</div>

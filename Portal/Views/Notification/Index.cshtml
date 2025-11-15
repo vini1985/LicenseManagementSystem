@@ -1,0 +1,55 @@
+﻿@model IEnumerable<Portal.Models.NotificationViewModels>
+
+@{
+    ViewData["Title"] = "Notifications";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Subject)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Recipient)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SenderAddress)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Message)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreatedAt)
+            </th>
+            
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Subject)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Recipient)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SenderAddress)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Message)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedAt)
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

@@ -1,0 +1,28 @@
+﻿using Microsoft.OpenApi.Models;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+
+var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddDbContext<DocumentServiceContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DocumentServiceContext") ?? throw new InvalidOperationException("Connection string 'DocumentServiceContext' not found.")));
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddControllers();
+builder.Services.AddAuthorization();
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Document Service", Version = "v1" });
+});
+
+var app = builder.Build();
+
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
+app.UseAuthorization();
+
+app.MapControllers();
+
+
+app.Run();

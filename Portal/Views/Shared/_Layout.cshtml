@@ -1,0 +1,61 @@
+@{
+    var title = "LMS";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@title - @ViewData["Title"]</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <style>
+        body {
+            background-color: white;
+        }
+        .navbar-lms {
+            background-color: #00695c;
+        }
+        .navbar-lms .navbar-brand,
+        .navbar-lms .nav-link {
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">LMS</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        @Html.ActionLink("Add License", "Index", "License", null, new { @class = "nav-link" })
+                    </li>
+                    <li class="nav-item">
+                        @Html.ActionLink("Payments", "Index", "Payment", null, new { @class = "nav-link" })
+                    </li>
+                    <li class="nav-item">
+                        @Html.ActionLink("Documents", "Index", "Document", null, new { @class = "nav-link" })
+                    </li>
+                    <li class="nav-item">
+                        @Html.ActionLink("Notifications", "Index", "Notification", null, new { @class = "nav-link" })
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link disabled" aria-disabled="true"></a>
+                    </li>
+                </ul>
+                <form asp-controller="Home" asp-action="Logout" method="post">
+                    <p>Logged in as: @User.FindFirst("email")?.Value</p>
+                    <button type="submit" class="nav-link btn btn-link text-dark">Logout</button>
+                </form>
+            </div>
+        </div>
+    </nav>
+    <div class="container mt-4">
+        @RenderBody()
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,71 @@
+﻿@model IEnumerable<Portal.Models.LicenseViewModels>
+
+@{
+    ViewData["Title"] = "License";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<p>
+    <a asp-action="Create">Create New License</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.LicenseNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LicenseType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Category)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ApplicationDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Status)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Notes)
+            </th>
+
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.LicenseNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LicenseType)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Category)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ApplicationDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Notes)
+            </td>
+                <td>
+                    <a asp-controller="License" asp-action="Edit" asp-route-id="@item.LicenseId">Edit</a> |
+                    <form asp-controller="License"
+                          asp-action="Delete"
+                          asp-route-id="@item.LicenseId"
+                          method="post">
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+
+                </td>
+
+
+        </tr>
+}
+    </tbody>
+</table>

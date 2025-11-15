@@ -1,0 +1,55 @@
+﻿@model IEnumerable<Portal.Models.DocumentViewModels>
+
+@{
+    ViewData["Title"] = "Documents";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.DocumentId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LicenseId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DocumentType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DocumentName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DocumentPath)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UploadedAt)
+            </th>
+            
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.DocumentId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LicenseId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DocumentType)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DocumentName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DocumentPath)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UploadedAt)
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

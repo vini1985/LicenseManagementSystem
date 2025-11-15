@@ -1,0 +1,78 @@
+// 
+
+{
+  "Routes": [
+    {
+      "DownstreamPathTemplate": "/api/Notifications/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 53857
+        }
+      ],
+      "UpstreamPathTemplate": "/Notifications/{id}",
+      "UpstreamHttpMethod": [ "GET", "POST" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/License/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 53854
+        }
+      ],
+      "UpstreamPathTemplate": "/License/{id}",
+      "UpstreamHttpMethod": [ "GET", "POST" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/Documents/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 53844
+        }
+      ],
+      "UpstreamPathTemplate": "/Documents/{id}",
+      "UpstreamHttpMethod": [ "GET", "POST" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/Payments/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 53839
+        }
+      ],
+      "UpstreamPathTemplate": "/Payments/{id}",
+      "UpstreamHttpMethod": [ "GET", "POST" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/Users/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5138
+        }
+      ],
+      "UpstreamPathTemplate": "/Users/{id}",
+      "UpstreamHttpMethod": [ "GET", "POST" ]
+    },
+    {
+      "DownstreamPathTemplate": "/Login/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5138
+        }
+      ],
+      "UpstreamPathTemplate": "/Login/{id}",
+      "UpstreamHttpMethod": [ "GET", "POST" ]
+    }
+  ]
+}

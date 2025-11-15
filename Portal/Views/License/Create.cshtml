@@ -1,0 +1,70 @@
+﻿@model Portal.Models.LicenseViewModels
+
+@{
+    ViewData["Title"] = "Create License";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Create License</h1>
+<hr />
+<div class="row">
+    <div class="col-md-8">
+        <form asp-action="Create" asp-controller="License" asp-action="Create" method="POST" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group mb-3">
+                <input asp-for="LicenseId" type="hidden" class="form-control" value="@ViewBag.LicenseId" />
+                <input asp-for="TenantId" type="hidden" class="form-control" value="@ViewBag.TenantId" />
+                <label asp-for="LicenseNumber" class="control-label"></label>
+                <input asp-for="LicenseNumber" minlength="10" maxlength="15" class="form-control" />
+                <span asp-validation-for="LicenseNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="LicenseType" class="control-label"></label>
+                <input asp-for="LicenseType" class="form-control" />
+                <span asp-validation-for="LicenseType" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="Category" class="control-label"></label>
+                <input asp-for="Category" class="form-control" />
+                <span asp-validation-for="Category" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="ApplicationDate" class="control-label"></label>
+                <input asp-for="ApplicationDate" class="form-control" type="date" />
+                <span asp-validation-for="ApplicationDate" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="Status" class="control-label"></label>
+                <input asp-for="Status" class="form-control" />
+                <span asp-validation-for="Status" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="Notes" class="control-label"></label>
+                <textarea asp-for="Notes" class="form-control" rows="4"></textarea>
+                <span asp-validation-for="Notes" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="DocumentType" class="control-label"></label>
+                <input asp-for="DocumentType" class="form-control" />
+                <span asp-validation-for="DocumentType" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="DocumentName" class="control-label"></label>
+                <input asp-for="DocumentName" class="form-control" />
+                <span asp-validation-for="DocumentName" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <input type="file" name="DocumentInfo" class="form-control" asp-for="DocumentInfo" />
+                <span asp-validation-for="DocumentInfo" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
