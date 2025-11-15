@@ -8,8 +8,12 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
+
+//injected DbContext to connect to SQL Server
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("UserServiceContext") ?? throw new InvalidOperationException("Connection string 'AppDbContext' not found.")));
+
+// Generate a secure random key for JWT signing
 byte[] secreteBytes = new byte[64];
 using(var random =RandomNumberGenerator.Create())
 {
@@ -21,6 +25,8 @@ string secreteKey = Convert.ToBase64String(secreteBytes);
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
+
+//Swagger and JWT configuration
 builder.Services.AddSwaggerGen(options=> { 
     options.SwaggerDoc("v1", new OpenApiInfo
     {
@@ -29,6 +35,7 @@ builder.Services.AddSwaggerGen(options=> {
     });
 });
 
+//implementing JWT Authentication
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
@@ -42,6 +49,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
         };
     });
+//implementing Authorization
 builder.Services.AddAuthorization();
 builder.Services.AddIdentityApiEndpoints<IdentityUser>(options =>
 {

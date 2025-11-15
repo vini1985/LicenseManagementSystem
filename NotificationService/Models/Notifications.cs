@@ -2,6 +2,9 @@
 
 namespace NotificationService.Models
 {
+    // Notifications entity representing a notification record
+    /// with properties for Id, Subject, Recipient, SenderAddress, Message, and CreatedAt.
+    /// And to create the corresponding database table using Entity Framework Core.
     public class Notifications
     {
         [Key]

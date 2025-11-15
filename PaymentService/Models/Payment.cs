@@ -2,6 +2,9 @@
 
 namespace PaymentService.Models
 {
+    // Payment entity representing a payment record
+    /// with properties for Id, LicenseId, Amount, PaymentDate, PaymentMethod, and Status.
+    /// And to create the corresponding database table using Entity Framework Core.
     public class Payment
     {
         [Key]

@@ -1,5 +1,4 @@
-// 
-
+// ocelot.json is used for configuring Ocelot API Gateway in .NET applications.
 {
   "Routes": [
     {

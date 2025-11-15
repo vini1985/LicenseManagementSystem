@@ -20,11 +20,12 @@ namespace Portal.Controllers
             _httpClient = new HttpClient();
             _httpClient.BaseAddress = _url;
         }
-
+        // This action renders the login view.
         public IActionResult Index()
         {
             return View();
         }
+        // This action handles user login by sending credentials to an external API and managing authentication cookies.
         [HttpPost]
         public async Task<IActionResult> Login(UserViewModels model)
         {
@@ -63,6 +64,7 @@ namespace Portal.Controllers
             }
             return View();
         }
+        // This action handles user logout by clearing authentication cookies.
         public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);

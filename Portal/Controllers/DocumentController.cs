@@ -12,11 +12,13 @@ namespace Portal.Controllers
         // GET: DocumentController
         private readonly HttpClient _httpClient;
         Uri _url = new Uri("http://localhost:5155");
+        //initialize http client
         public DocumentController()
         {
             _httpClient = new HttpClient();
             _httpClient.BaseAddress = _url;
         }
+        // This action fetches document data from an external API and displays it in the view.
         public async Task<ActionResult> Index()
         {
             try

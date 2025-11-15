@@ -2,6 +2,9 @@
 
 namespace LicenseService.Models
 {
+    // License entity representing a license record
+    /// with properties for LicenseId, TenantId, UserId, LicenseNumber, LicenseType, Category, ApplicationDate, Status, and Notes.
+    /// And to create the corresponding database table using Entity Framework Core.
     public class License
     {
         [Key]

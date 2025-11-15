@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 
 public class AppDbContext : IdentityDbContext<IdentityUser>
 {
+    // Constructor to initialize the DbContext with options and inherit from IdentityDbContext to include identity tables
     public AppDbContext(DbContextOptions<AppDbContext> options)
         : base(options)
     {

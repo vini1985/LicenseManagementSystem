@@ -2,6 +2,9 @@
 
 namespace blog.api.Models
 {
+    // Users entity representing a user record
+    /// with properties for UserId, UserName, UserEmail, and UserPassword.
+    /// And to create the corresponding database table using Entity Framework Core.
     public class Users
     {
         [Key]

@@ -3,11 +3,13 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
+// Injected DbContext to connect to SQL Server
 builder.Services.AddDbContext<NotificationServiceContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("NotificationServiceContext")));
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddControllers();
 builder.Services.AddAuthorization();
+// Swagger configuration
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "Notification Service", Version = "v1" });

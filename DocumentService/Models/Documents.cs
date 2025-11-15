@@ -2,6 +2,9 @@
 
 namespace DocumentService.Models
 {
+    // Documents entity representing a document record
+    /// with properties for DocumentId, LicenseId, DocumentType, DocumentName, DocumentPath, and UploadedAt.
+    /// And to create the corresponding database table using Entity Framework Core.
     public class Documents
     {
         [Key]

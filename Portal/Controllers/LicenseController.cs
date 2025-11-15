@@ -9,6 +9,10 @@ using System.Text;
 
 namespace Portal.Controllers
 {
+    // LicenseController handles CRUD operations for licenses by communicating with an external API.
+    // It is secured to allow access only to users with "Admin" or "User" roles.
+    // All actions are asynchronous to improve performance.
+    
     [Authorize(Roles = "Admin,User")]
     public class LicenseController : Controller
     {
@@ -70,7 +74,7 @@ namespace Portal.Controllers
 
             try
             {
-                // 1. Upload Document
+                // Save Document in the server's file system
                 var uploadPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads");
                 Directory.CreateDirectory(uploadPath);
 
@@ -89,7 +93,7 @@ namespace Portal.Controllers
                     return await _httpClient.PostAsync($"{_httpClient.BaseAddress}{endpoint}", content);
                 }
 
-                // 2. Send License details
+                // Save License details using external API
                 var licenseResponse = await PostAsync("License", model);
 
                 if (!licenseResponse.IsSuccessStatusCode)
@@ -98,7 +102,7 @@ namespace Portal.Controllers
                     return View(model);
                 }
 
-                // 3. Save Document record
+                // Save Document details using external API
                 var documentVm = new DocumentViewModels
                 {
                     DocumentId = Guid.NewGuid(),
@@ -111,7 +115,7 @@ namespace Portal.Controllers
 
                 await PostAsync("Documents", documentVm);
 
-                
+                // After creating a license, it redirects to the Payment creation process.
                 HttpContext.Session.SetString("LicenseId", model.LicenseId.ToString());
 
                 return RedirectToAction(nameof(Create),"Payment");
@@ -149,6 +153,7 @@ namespace Portal.Controllers
         }
 
         // POST: LicenseController/Edit/5
+        //Based on the License ID update license inforamtion.
         [HttpPut("{id}")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit(Guid id,LicenseViewModels model)
@@ -184,6 +189,7 @@ namespace Portal.Controllers
         }
 
         // GET: LicenseController/Delete/5
+        //Based on the License ID, it deletes the license by making a DELETE request to the external API.
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(Guid id)
         {
@@ -198,6 +204,7 @@ namespace Portal.Controllers
         }
 
         // POST: LicenseController/Delete/5
+        //Based on the License ID, it deletes the license by making a DELETE request to the external API.
         [HttpPost("{id}")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Delete(LicenseViewModels model,Guid id)
