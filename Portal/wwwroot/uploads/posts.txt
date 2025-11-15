@@ -1,4 +1,0 @@
-Notification port:
-'https://localhost:53856/api/Notifications'
-
-gateway:
