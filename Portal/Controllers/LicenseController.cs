@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Portal.Models;
+using System.Net;
 using System.Net.Http;
 using System.Reflection;
 using System.Text;
@@ -190,40 +191,17 @@ namespace Portal.Controllers
 
         // GET: LicenseController/Delete/5
         //Based on the License ID, it deletes the license by making a DELETE request to the external API.
-        [HttpDelete("{id}")]
+        [HttpPost("{id}")]
         public async Task<IActionResult> Delete(Guid id)
         {
             if (id == Guid.Empty)
                 return BadRequest();
             var response = await _httpClient.DeleteAsync($"{_httpClient.BaseAddress}License/{id}");
-
             if (response == null)
                 return NotFound();
 
             return RedirectToAction(nameof(Index));
         }
 
-        // POST: LicenseController/Delete/5
-        //Based on the License ID, it deletes the license by making a DELETE request to the external API.
-        [HttpPost("{id}")]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Delete(LicenseViewModels model,Guid id)
-        {
-            try
-            {
-                if (id == Guid.Empty)
-                    return BadRequest();
-                var response = await _httpClient.DeleteAsync($"{_httpClient.BaseAddress}License/{id}");
-
-                if (response == null)
-                    return NotFound();
-
-                return RedirectToAction(nameof(Index),"License");
-            }
-            catch
-            {
-                return View();
-            }
-        }
     }
 }

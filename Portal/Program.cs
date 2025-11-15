@@ -7,7 +7,6 @@ var builder = WebApplication.CreateBuilder(args);
 
 // MVC + Razor
 builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
-
 // -----------------------------
 // 1. JWT Authentication (For API Calls)
 // -----------------------------

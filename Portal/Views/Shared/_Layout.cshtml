@@ -47,7 +47,6 @@
                     </li>
                 </ul>
                 <form asp-controller="Home" asp-action="Logout" method="post">
-                    <p>Logged in as: @User.FindFirst("email")?.Value</p>
                     <button type="submit" class="nav-link btn btn-link text-dark">Logout</button>
                 </form>
             </div>
