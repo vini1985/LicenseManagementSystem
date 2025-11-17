@@ -26,16 +26,17 @@ string secreteKey = Convert.ToBase64String(secreteBytes);
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddTransient<JWTToken, JWTTokenService>();
 
-//Swagger and JWT configuration
-builder.Services.AddSwaggerGen(options=> { 
-    options.SwaggerDoc("v1", new OpenApiInfo
-    {
-        Title = "User API with Identity",
-        Version = "v1"
-    });
-});
+//implementing Identity configuration
+builder.Services.AddIdentity<ApplicationUser,IdentityRole>(options =>
+{
+    options.Password.RequiredLength = 8;
+    options.Password.RequireNonAlphanumeric = true;
+    options.Password.RequireUppercase = true;
+    options.Password.RequireLowercase = true;
+    options.Password.RequireDigit = true;
+}).AddEntityFrameworkStores<AppDbContext>()
+.AddDefaultTokenProviders();
 
 //implementing JWT Authentication
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -52,22 +53,14 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
         };
     });
-//implementing Authorization
-builder.Services.AddAuthorization();
-builder.Services.AddIdentityApiEndpoints<IdentityUser>(options =>
-{
-    options.Password.RequiredLength = 8;
-    options.Password.RequireNonAlphanumeric = true;
-    options.Password.RequireUppercase = true;
-    options.Password.RequireLowercase = true;
-    options.Password.RequireDigit = true;
-}).AddEntityFrameworkStores<AppDbContext>()
- .AddDefaultTokenProviders();
-
-//builder.Services.AddIdentity<Users, IdentityRole>()
-//   .AddEntityFrameworkStores<AppDbContext>()
-//   .AddDefaultTokenProviders();
-
+//Swagger
+builder.Services.AddSwaggerGen(options => {
+    options.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Title = "User API with Identity",
+        Version = "v1"
+    });
+});
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -76,11 +69,11 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-app.UseHttpsRedirection();
-app.MapIdentityApi<IdentityUser>();
+//app.UseHttpsRedirection();
+//app.MapIdentityApi<IdentityUser>();
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.MapControllers().RequireAuthorization();
+app.MapControllers();
 
 app.Run();

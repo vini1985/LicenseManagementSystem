@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using LicenseService.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace LicenseService.Controllers
 {
@@ -21,6 +22,7 @@ namespace LicenseService.Controllers
         }
 
         // GET: api/Licenses
+        //[Authorize]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<License>>> GetLicense()
         {

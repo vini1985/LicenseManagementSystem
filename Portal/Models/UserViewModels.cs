@@ -5,7 +5,6 @@ namespace Portal.Models
 {
     public class UserViewModels
     {
-        public string UserId { get; set; } = Guid.NewGuid().ToString();
         public string UserName { get; set; }= string.Empty;
         [Required]
         [DisplayName("Email Address")]

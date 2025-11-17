@@ -2,11 +2,14 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using NuGet.Common;
 using Portal.Models;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Reflection;
 using System.Text;
+using System.Text.Json;
 
 namespace Portal.Controllers
 {
@@ -14,7 +17,6 @@ namespace Portal.Controllers
     // It is secured to allow access only to users with "Admin" or "User" roles.
     // All actions are asynchronous to improve performance.
     
-    [Authorize(Roles = "Admin,User")]
     public class LicenseController : Controller
     {
         // GET: LicenseController
@@ -25,11 +27,14 @@ namespace Portal.Controllers
             _httpClient = new HttpClient();
             _httpClient.BaseAddress = _url;
         }
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public async Task<ActionResult> Index()
         {
             try
             {
+                string token = User.Claims.FirstOrDefault(c => c.Type == "jwttoken")?.Value;
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
                 var response = await _httpClient.GetAsync($"{_httpClient.BaseAddress}License");
 
                 if (!response.IsSuccessStatusCode)
