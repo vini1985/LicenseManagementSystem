@@ -54,12 +54,13 @@
                 @Html.DisplayFor(modelItem => item.Notes)
             </td>
                 <td style="width:200px;">
-                    <form asp-controller="License"
+                    <form asp-controller="LicenseUpdate"
                           asp-action="Edit"
                           asp-route-id="@item.LicenseId"
                           style="display:inline;" method="get">
                         <button type="submit" class="btn btn-info btn-sm">Edit</button>
                     </form>
+                    @* <a asp-controller="LicenseUpdate" action="Edit" class="btn btn-danger btn-sm">Edit</a> *@
                    <form asp-controller="License"
                           asp-action="Delete"
                           asp-route-id="@item.LicenseId"

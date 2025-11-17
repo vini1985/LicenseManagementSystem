@@ -63,6 +63,7 @@ namespace LicenseService.Controllers
 
             try
             {
+                _context.License.Update(license);
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
