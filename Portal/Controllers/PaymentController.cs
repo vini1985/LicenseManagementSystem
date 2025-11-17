@@ -88,7 +88,11 @@ namespace Portal.Controllers
                     var emailVm = new EmailViewModels
                     {
                         LicenseId = model.LicenseId,
-                        Recipient = HttpContext.User.FindFirst(ClaimTypes.Email)?.Value,
+                        Recipient = "test@test.com",
+                        Subject = "Payment Confirmation",
+                        Message = $"Your payment of {model.Amount} has been successfully processed.",
+                        SenderAddress = "no-reply@yourdomain.com",
+                        CreatedAt = DateTime.UtcNow
                     };
 
                     await PostAsync("Notifications", emailVm);

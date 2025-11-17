@@ -11,11 +11,11 @@ namespace NotificationService.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class NotificationsController : ControllerBase
+    public class NotificationServicesController : ControllerBase
     {
         private readonly NotificationServiceContext _context;
 
-        public NotificationsController(NotificationServiceContext context)
+        public NotificationServicesController(NotificationServiceContext context)
         {
             _context = context;
         }

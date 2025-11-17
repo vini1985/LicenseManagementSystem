@@ -1,0 +1,86 @@
+{
+  "AllowedHosts": "*",
+  "ConnectionStrings": {
+    "NotificationServiceContext": "Server=VINI1983\\VINISERVER;Database=NotificationServiceDB;Trusted_Connection=True;MultipleActiveResultSets=true; TrustServerCertificate=True;"
+  },
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft.AspNetCore": "Warning"
+    }
+  }
+}
+
+
+DocumentService
+
+
+//app.MapPost("/api/billing/v1/charges", (object dto) =>
+//{
+//    var id = Guid.NewGuid();
+//    return Results.Created($"/api/billing/v1/charges/{id}", new { Id = id, Amount = 100.0, Currency = "USD", Status = "Created" });
+//});
+
+//app.MapGet("/api/billing/v1/invoices/{invoiceId}", (Guid invoiceId) =>
+//{
+//    return Results.Ok(new { Id = invoiceId, Amount = 100.0, Currency = "USD", Status = "Paid" });
+//});
+
+//app.MapPost("/api/messaging/v1/outbound", (object dto) =>
+//{
+//    return Results.Ok(new { Message = "Notification queued" });
+//});
+
+// In a real application this would be injected
+//static string GetTenantId(HttpContext context) => context.User.Identity?.Name ?? "tenant-default";
+
+// Endpoint definitions using minimal APIs
+//app.MapPost("/api/registry/v1/enrollments", (HttpContext context, object dto) =>
+//{
+//    var tenantId = GetTenantId(context);
+//    var id = Guid.NewGuid();
+//    return Results.Created($"/api/registry/v1/enrollments/{id}", new { Id = id, Tenant = tenantId });
+//});
+
+//app.MapGet("/api/registry/v1/enrollments/{enrollmentId}", (Guid enrollmentId) =>
+//{
+//    return Results.Ok(new { Id = enrollmentId, Status = "Draft" });
+//});
+
+//app.MapPost("/api/registry/v1/enrollments/{enrollmentId}/submit-review", (Guid enrollmentId) =>
+//{
+//    return Results.Ok(new { Id = enrollmentId, Status = "Submitted" });
+//});
+
+//app.MapPost("/api/registry/v1/enrollments/{enrollmentId}/approve", (Guid enrollmentId) =>
+//{
+//    return Results.Ok(new { Id = enrollmentId, Status = "Approved" });
+//});
+
+//app.MapPost("/api/files/v1/blobs", (object dto) =>
+//{
+//    var id = Guid.NewGuid().ToString("N");
+//    return Results.Created($"/api/files/v1/blobs/{id}", new { Id = id, FileName = "uploaded-file.dat" });
+//});
+
+//app.MapGet("/api/files/v1/blobs/{blobId}", (string blobId) =>
+//{
+//    return Results.Ok(new { Id = blobId, FileName = "sample.dat", Url = $"/files/{blobId}.dat" });
+//});
+
+
+<div class="form-group">
+     <label asp-for="DocumentType" class="control-label"></label>
+     <input asp-for="DocumentType" class="form-control" />
+     <span asp-validation-for="DocumentType" class="text-danger"></span>
+ </div>
+ <div class="form-group">
+     <label asp-for="DocumentName" class="control-label"></label>
+     <input asp-for="DocumentName" class="form-control" />
+     <span asp-validation-for="DocumentName" class="text-danger"></span>
+ </div>
+ <div class="form-group">
+     <label asp-for="DocumentPath" class="control-label"></label>
+     <input asp-for="DocumentPath" class="form-control" />
+     <span asp-validation-for="DocumentPath" class="text-danger"></span>
+ </div> 

@@ -11,11 +11,11 @@ namespace DocumentService.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class DocumentsController : ControllerBase
+    public class DocumentServicesController : ControllerBase
     {
         private readonly DocumentServiceContext _context;
 
-        public DocumentsController(DocumentServiceContext context)
+        public DocumentServicesController(DocumentServiceContext context)
         {
             _context = context;
         }

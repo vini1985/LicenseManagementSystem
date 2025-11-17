@@ -2,7 +2,7 @@
 {
   "Routes": [
     {
-      "DownstreamPathTemplate": "/api/Notifications/{id}",
+      "DownstreamPathTemplate": "/api/NotificationServices/{id}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -14,7 +14,7 @@
       "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE", "PATCH" ]
     },
     {
-      "DownstreamPathTemplate": "/api/License/{id}",
+      "DownstreamPathTemplate": "/api/LicenseServices/{id}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -26,7 +26,7 @@
       "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE", "PATCH" ]
     },
     {
-      "DownstreamPathTemplate": "/api/Documents/{id}",
+      "DownstreamPathTemplate": "/api/DocumentServices/{id}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -38,7 +38,7 @@
       "UpstreamHttpMethod": [ "GET", "POST" ]
     },
     {
-      "DownstreamPathTemplate": "/api/Payments/{id}",
+      "DownstreamPathTemplate": "/api/PaymentServices/{id}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {

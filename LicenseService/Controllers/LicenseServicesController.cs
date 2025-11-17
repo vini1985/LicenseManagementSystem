@@ -11,11 +11,11 @@ namespace LicenseService.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class LicenseController : ControllerBase
+    public class LicenseServicesController : ControllerBase
     {
         private readonly LicenseServiceContext _context;
 
-        public LicenseController(LicenseServiceContext context)
+        public LicenseServicesController(LicenseServiceContext context)
         {
             _context = context;
         }

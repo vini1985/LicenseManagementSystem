@@ -11,11 +11,11 @@ namespace PaymentService.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class PaymentsController : ControllerBase
+    public class PaymentServicesController : ControllerBase
     {
         private readonly PaymentServiceContext _context;
 
-        public PaymentsController(PaymentServiceContext context)
+        public PaymentServicesController(PaymentServiceContext context)
         {
             _context = context;
         }

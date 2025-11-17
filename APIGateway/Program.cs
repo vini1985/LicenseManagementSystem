@@ -11,8 +11,8 @@ builder.Configuration.AddJsonFile("ocelot.json", optional: false, reloadOnChange
 //adding ocelot services to the project
 builder.Services.AddOcelot(builder.Configuration).AddCacheManager(settings => settings.WithDictionaryHandle());
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddScoped<IJobTask, JobServices>();     
-builder.Services.AddHostedService<Scheduler>();      
+//builder.Services.AddScoped<IJobTask, JobServices>();     
+//builder.Services.AddHostedService<Scheduler>();      
 var app = builder.Build();
 app.MapGet("/", () => "Hello World!");
 await app.UseOcelot();
