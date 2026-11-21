@@ -4,13 +4,13 @@
 A microservices-based .NET solution for managing licenses, documents, notifications, payments, and users. The Portal is an MVC/Razor application that acts as a UI and calls the microservices.
 
 ## Projects and Target Frameworks
-- APIGateway (Ocelot) — .NET 8
-- UserService — .NET 8
-- Portal — .NET 6
-- LicenseService — .NET 6
-- DocumentService — .NET 6
-- NotificationService — .NET 6
-- PaymentService — .NET 6
+- APIGateway (Ocelot) â€” .NET 8
+- UserService â€” .NET 8
+- Portal â€” .NET 6
+- LicenseService â€” .NET 6
+- DocumentService â€” .NET 6
+- NotificationService â€” .NET 6
+- PaymentService â€” .NET 6
 
 Note: Some projects target .NET 8 while others target .NET 6. Use corresponding SDKs installed on your machine.
 
@@ -33,8 +33,8 @@ Note: Some projects target .NET 8 while others target .NET 6. Use corresponding 
      dotnet ef database update --project DocumentService
      dotnet ef database update --project LicenseService
      dotnet ef database update --project NotificationService
-     dotnet ef database update --project PaymentService
-     dotnet ef database update --project UserService
+     dotnet ef database update --project PaymentServic
+     dotnet ef database update --project UserService\UserService
 
 4. Run each service
    - Start microservices individually (example):
@@ -51,7 +51,7 @@ Note: Some projects target .NET 8 while others target .NET 6. Use corresponding 
      dotnet run --project Portal
 
 5. Service base URLs and ports
-   - By default, ASP.NET apps choose a port at runtime or use the launchSettings.json configuration. Controllers in the Portal currently reference services using a hard-coded base URI (for example: `http://localhost:5155`) — update these URIs in the Portal controllers or configure the microservices to run on those ports.
+   - By default, ASP.NET apps choose a port at runtime or use the launchSettings.json configuration. Controllers in the Portal currently reference services using a hard-coded base URI (for example: `http://localhost:5155`) â€” update these URIs in the Portal controllers or configure the microservices to run on those ports.
    - To set a fixed port, either modify each project's launchSettings.json or run with: `dotnet run --urls "http://localhost:5155" --project LicenseService`
 
 6. API Gateway (Ocelot)
